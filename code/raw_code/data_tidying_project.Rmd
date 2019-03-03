@@ -6,6 +6,11 @@ output: html_document
 ---
 
 
+
+In this project we will review retail sales data and department store sales data in the U.S.
+
+First step is to load the packages we will need for the project:
+
 ```{r setup, include=FALSE}
 ## install packages if necessary
 list.of.packages <- c("httr", "readxl", "dplyr", "tidyr", "stringr", "reshape2", "skimr", "ggplot2")
@@ -24,6 +29,8 @@ library(ggplot2)
 ```
 
 ### Get Data
+
+Next we will read in the data from the data.world website.
 
 [Data Set 1](https://data.world/retail/department-store-sales): Sales from the Retail Trade and Food Services Report from the US Census. This dataset only covers Department Stores, though the report covers a wide range of retail types. [1992-2016]
 
@@ -44,6 +51,8 @@ df2 <- read_excel(tf)
 colnames(df2) <- df2[1,]
 ```
 
+Then we save the raw data for future reference, guarding against website changes or updates that might eliminate the data we are using for this analysis, this in the interests of reproducibility.
+
 ### Save Raw Data
 
 ```{r save-data, warning=FALSE} 
@@ -51,6 +60,8 @@ colnames(df2) <- df2[1,]
 saveRDS(df1, "//cloud//project//data_tidying_project//data//raw_data//df_department.rds")
 saveRDS(df2, "//cloud//project//data_tidying_project//data//raw_data//df_retail.rds")
 ```
+
+Now we have to wrangle our way to several changes to focus on only the information we want and to combine data from two tables into one with more readable variable names.
 
 ### Wrangle Data
 
@@ -99,8 +110,10 @@ df_department <- df1 %>%
 
 ```{r merge-data, warning=FALSE} 
 ## Now, combine the two data frames
-df_total <- function_name()
+df_total <- rbind(df_retail, df_department)
 ```
+
+Pictures being worth thousands of words, we now visualize the data we have summarized.
 
 ```{r plot, warning=FALSE, fig.width=10} 
 ## Plot Retail Sales data
